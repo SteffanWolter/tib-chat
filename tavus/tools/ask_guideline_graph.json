@@ -1,0 +1,21 @@
+{
+  "name": "ask_guideline_graph",
+  "description": "Look up the answer in TIB's clinical guideline knowledge graph. Call this for every question about guidelines, conditions, drugs, procedures, side effects, recommendations or evidence. Pass the user's question in plain English. The result is an answer traced through the graph, with classes of recommendation and levels of evidence.",
+  "parameters": {
+    "type": "object",
+    "required": [
+      "question"
+    ],
+    "properties": {
+      "question": {
+        "type": "string",
+        "description": "The user's question in plain English"
+      }
+    }
+  },
+  "delivery": {
+    "app_message": true
+  },
+  "on_call": "silent",
+  "on_resolve": "generate_response"
+}

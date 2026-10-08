@@ -1,0 +1,51 @@
+:root{--ink:oklch(0.22 0.02 264);--ink-2:oklch(0.38 0.02 264);--muted:oklch(0.55 0.015 264);--line:oklch(0.91 0.008 264);--side:oklch(0.97 0.005 264);--win:#fff;
+  --accent:oklch(0.55 0.19 264);--accent-soft:oklch(0.93 0.04 264);--ok:oklch(0.64 0.15 150);--warn:oklch(0.72 0.15 70);--danger:oklch(0.6 0.2 25);
+  --display:"Segoe UI Variable Display","Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.45 "Segoe UI",system-ui,sans-serif;color:var(--ink);background:linear-gradient(160deg,oklch(0.86 0.05 245),oklch(0.62 0.16 255));min-height:100vh}
+button,input{font:inherit}
+.hidden{display:none!important}
+.login{min-height:100vh;display:grid;place-items:center;padding:24px}
+.card{background:var(--win);border-radius:16px;box-shadow:0 30px 60px oklch(0.3 0.08 255 / .28)}
+.login .card{width:min(400px,100%);padding:36px}
+.login h1{margin:0 0 6px;font:600 26px/32px var(--display)}
+.login p{margin:0 0 22px;color:var(--muted)}
+.login input{width:100%;height:44px;border-radius:10px;border:1px solid var(--line);padding:0 14px;font-size:15px;outline:none}
+.login input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.btn{height:44px;padding:0 18px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+.login .btn{width:100%;margin-top:14px}
+.err{color:var(--danger);font-size:13px;min-height:18px;margin-top:8px}
+.app{max-width:1400px;margin:28px auto;padding:0 24px}
+.app>.card{padding:26px 28px 28px}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px}
+.top h1{margin:0;font:600 28px/34px var(--display)}
+.top p{margin:4px 0 0;color:var(--muted)}
+.ghost{height:36px;padding:0 14px;border-radius:9px;border:1px solid var(--line);background:var(--win);color:var(--ink-2);cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:22px}
+.stat{padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:var(--side)}
+.stat b{display:block;font:650 26px/32px var(--display)}
+.stat span{font-size:12.5px;color:var(--muted)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.tools input{height:36px;width:280px;border-radius:9px;border:1px solid var(--line);padding:0 12px;outline:none}
+.chip{height:30px;padding:0 12px;border-radius:15px;border:1px solid var(--line);background:var(--win);color:var(--ink-2);cursor:pointer;font-size:13px}
+.chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+.tools .live{margin-left:auto;font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.tools .live i{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:p 2s infinite}
+@keyframes p{50%{opacity:.35}}
+.tbl{border:1px solid var(--line);border-radius:12px;overflow:auto;max-height:calc(100vh - 380px);min-height:300px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{position:sticky;top:0;background:var(--side);text-align:left;font-weight:600;color:var(--muted);padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:hover td{background:oklch(0.985 0.004 264)}
+.k{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:11px;font-size:12px;font-weight:600;white-space:nowrap;background:var(--side);color:var(--ink-2)}
+.k.login,.k.visit{background:oklch(0.94 0.04 264);color:var(--accent)}
+.k.login_failed,.k.admin_login_failed{background:oklch(0.95 0.04 25);color:var(--danger)}
+.k.chat{background:oklch(0.95 0.04 150);color:oklch(0.45 0.12 150)}
+.k.call_start,.k.call_end,.k.call_tool{background:oklch(0.95 0.05 300);color:oklch(0.45 0.15 300)}
+.k.gpu_wake,.k.gpu_shutdown{background:oklch(0.96 0.05 75);color:oklch(0.5 0.12 65)}
+.mono{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--ink-2)}
+.dev{display:inline-flex;align-items:center;gap:6px}
+.dev i{width:9px;height:9px;border-radius:50%}
+.txt{max-width:420px;color:var(--ink-2)}
+.muted{color:var(--muted)}
+.note{margin-top:12px;font-size:12px;color:var(--muted)}

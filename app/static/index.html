@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b7cfa'/%3E%3Cstop offset='1' stop-color='%232f5bd8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M32 4C16.5 4 4 14.9 4 28.5c0 7.6 3.9 14.4 10 18.9L11 60l14.2-8.1c2.2.4 4.5.6 6.8.6 15.5 0 28-10.9 28-24.5S47.5 4 32 4Z' fill='url(%23g)'/%3E%3Cg stroke='%23fff' stroke-width='3' stroke-linecap='round' opacity='.9'%3E%3Cpath d='M21 33l10-13M31 20l12 14M21 33h22'/%3E%3C/g%3E%3Cg fill='%23fff'%3E%3Ccircle cx='31' cy='19' r='5'/%3E%3Ccircle cx='20' cy='34' r='5'/%3E%3Ccircle cx='44' cy='34' r='5'/%3E%3C/g%3E%3C/svg%3E">
+<title>TIB Chat</title>
+<link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+
+<section class="login hidden" id="login" aria-labelledby="login-title">
+  <form class="login-card" id="login-form" autocomplete="on">
+    <div class="logos"><img class="l-luh" src="/static/img/logo-luh.svg" alt="Leibniz Universität Hannover"><img class="l-tib" src="/static/img/logo-tib.png" alt="TIB – Leibniz Information Centre for Science and Technology"><img class="l-sdm" src="/static/img/logo-sdm.png" alt="SDM"><img class="l-l3s" src="/static/img/logo-l3s.png" alt="L3S AI Research"><img class="l-caimed" src="/static/img/logo-caimed.png" alt="CAIMed"></div>
+    <h1 id="login-title">Login TIB Chat</h1>
+    <p>Sign in with your team password.</p>
+    <input type="text" name="username" value="team" autocomplete="username" hidden>
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required autofocus>
+    <div class="error" id="login-error" role="alert"></div>
+    <button class="call" type="submit" id="login-btn">Sign in</button>
+    <div class="fine">You stay signed in on this browser for 30 days.</div>
+  </form>
+</section>
+
+<section class="boot hidden" id="boot" aria-labelledby="boot-title">
+  <div class="boot-card">
+    <div class="boot-main">
+      <div class="logos"><img class="l-luh" src="/static/img/logo-luh.svg" alt="Leibniz Universität Hannover"><img class="l-tib" src="/static/img/logo-tib.png" alt="TIB"><img class="l-sdm" src="/static/img/logo-sdm.png" alt="SDM"><img class="l-l3s" src="/static/img/logo-l3s.png" alt="L3S AI Research"><img class="l-caimed" src="/static/img/logo-caimed.png" alt="CAIMed"></div>
+
+      <div class="boot-phase" id="boot-choose">
+        <span class="kicker">Before we start</span>
+        <h1 id="boot-title">How long should Lino and Guido stay awake?</h1>
+        <p class="lead">Lino runs on his own GPU. We start it now, so it is ready when you need it, and keep it running for at least the time you choose.</p>
+        <div class="dial" id="dial">
+          <div class="dial-top">
+            <div class="dial-val" aria-live="polite"><b id="dial-num">1</b><span id="dial-unit">hour</span></div>
+            <div class="dial-until"><span id="dial-use">Demo or talk</span>awake until at least <b id="dial-until">–</b></div>
+          </div>
+          <div class="dial-track" id="dial-track" role="slider" tabindex="0" aria-label="Minimum time awake" aria-valuemin="0" aria-valuemax="4" aria-valuenow="2" aria-valuetext="1 hour">
+            <div class="dial-rail"><i class="dial-fill" id="dial-fill"></i></div>
+            <span class="dial-thumb" id="dial-thumb"></span>
+            <div class="dial-stops" id="dial-stops"></div>
+          </div>
+        </div>
+        <div class="boot-actions">
+          <button class="call boot-go" id="boot-go"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7Z"/></svg><span id="boot-go-t">Start the GPU</span></button>
+          <button class="boot-alt" id="boot-luna"><span class="av" style="background-image:url(/static/img/luna.jpg)"></span><span><b>Luna only</b><small>No GPU needed</small></span></button>
+        </div>
+        <p class="boot-tavus" id="boot-tavus"><i></i><span>Checking video call minutes…</span></p>
+      </div>
+
+      <div class="boot-phase hidden" id="boot-wait">
+        <span class="kicker"><i class="boot-spin"></i><span id="boot-state">Waking up</span></span>
+        <h1 id="boot-wtitle">Starting the GPU…</h1>
+        <div class="wake-time"><div class="wt-bar"><i id="boot-fill"></i></div><div class="wt-row"><span id="boot-elapsed">0:00</span><span id="boot-eta"></span></div></div>
+        <div class="boot-steps"><span id="bs-1">Starting NVIDIA L4 on Modal</span><span id="bs-2">Loading fine-tuned model</span><span id="bs-3">Warming up</span></div>
+        <button class="call boot-go hidden" id="boot-enter">Enter TIB Chat<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <p class="boot-err hidden" id="boot-err">The GPU did not start. <button id="boot-retry">Try again</button> or <button id="boot-skip2">continue with Luna only</button>.</p>
+      </div>
+
+      <ol class="boot-how" id="boot-how">
+        <li><b>Start.</b> The NVIDIA L4 GPU starts on Modal and loads Lino's fine-tuned model. This takes about <span class="boot-cold">3–4 minutes</span>; you enter the chat as soon as it is ready.</li>
+        <li><b>Guaranteed time.</b> Once ready, it stays awake for at least <span class="boot-hold">1 hour</span>, whether or not anyone is chatting.</li>
+        <li><b>While you use it.</b> After that, it keeps running as long as the page is in use: every interaction with Luna, Lino or Guido adds another 10 minutes.</li>
+        <li><b>Sleep.</b> After 10 minutes without use, the GPU sleeps to save credits. If that happens during a session, you can wake it again from the chat.</li>
+      </ol>
+    </div>
+
+    <aside class="boot-side">
+      <span class="kicker">Meet the agents</span>
+      <div class="agent-card"><span class="av" style="background-image:url(/static/img/luna.jpg)"></span><div><h3>Luna <em>RAG agent</em></h3>
+        <p>Retrieval-augmented generation over everything we extracted: 132 guideline documents with 2,378 pages. She searches the pages, reads them and answers with page-level citations you can open.</p>
+        <div class="tags"><span>Full-text retrieval</span><span>Video call</span></div></div></div>
+      <div class="agent-card"><span class="av" style="background-image:url(/static/img/lino.jpg)"></span><div><h3>Lino <em>Fine-tuned LLM</em></h3>
+        <p>Llama 3.2 1B, fine-tuned with NeSyCoT: neuro-symbolic chain-of-thought rules mined from the guideline knowledge graph. He answers questions from internalized knowledge and writes patient-education video scripts.</p>
+        <div class="tags"><span>Llama 3.2 1B + LoRA</span><span>NVIDIA L4 on Modal</span><span>Video scripts</span></div></div></div>
+      <div class="agent-card"><span class="av" style="background-image:url(/static/img/guido.jpg)"></span><div><h3>Guido <em>Knowledge-graph agent</em></h3>
+        <p>Walks the guideline knowledge graph we built (9,117 concepts, 3,977 recommendations) with graph tools tuned for it, shows every hop live and cites each recommendation with class and level of evidence.</p>
+        <div class="tags"><span>Think-on-Graph traversal</span><span>Live visualization</span><span>Video call</span></div></div></div>
+    </aside>
+  </div>
+</section>
+
+<div class="desk hidden" id="app">
+  <div class="window">
+    <nav class="rail" aria-label="Navigation">
+      <button class="active" id="nav-chat" aria-current="page"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>Chat</button>
+      <button id="nav-videos"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9.5 5 2.5-5 2.5Z"/></svg>Videos</button>
+      <button id="nav-sources"><svg viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5Z"/><path d="M13 4h5.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H13Z"/></svg>Sources</button>
+      <button id="nav-search" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search</button>
+      <button id="nav-settings"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>Settings</button>
+      <button class="me" id="logout" title="Sign out" aria-label="Sign out"><span class="presence"></span></button>
+    </nav>
+
+    <aside class="side" aria-label="Conversations">
+      <div class="side-head"><h1>TIB Chat</h1></div>
+      <button class="new" id="new-chat"><span class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>New chat</button>
+      <div class="list">
+        <div class="group">Today</div>
+        <button class="item active" id="item-luna"><div class="orb md"><span class="presence"></span></div><div class="meta"><div class="row"><b>Luna</b><time>now</time></div><small id="item-preview">RAG expert on heart guidelines</small></div></button>
+        <button class="item" id="item-lino"><div class="orb md lino"><span class="presence off" id="lino-dot"></span></div><div class="meta"><div class="row"><b>Lino</b><time id="lino-time">offline</time></div><small id="item-preview-lino">NeSyCoT fine-tuned expert</small></div></button>
+        <button class="item" id="item-guido"><div class="orb md guido"><span class="presence" id="guido-dot"></span></div><div class="meta"><div class="row"><b>Guido</b><time id="guido-time">offline</time></div><small id="item-preview-guido">Graph traversal expert</small></div></button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="conv" id="view-chat">
+        <header class="head">
+          <div class="orb xl-head" id="head-orb" aria-hidden="true"><span class="presence"></span></div>
+          <div class="title"><div class="name-row"><h2 id="head-name">Luna</h2><span class="rt-pill hidden" id="head-pill"></span></div><span class="tagline" id="head-tagline">Retrieval-augmented expert on heart guidelines</span></div>
+          <div class="head-actions">
+            <button class="call" id="start"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M17 10.2 22 7v10l-5-3.2Z"/></svg><span>Video Call</span></button>
+            <button class="call leave hidden" id="stop"><svg viewBox="0 0 24 24"><path d="M2.5 14.8c5.2-5 13.8-5 19 0 .5.5.5 1.3 0 1.8l-1.6 1.6c-.4.4-1.1.5-1.6.1l-2.2-1.6a1.3 1.3 0 0 1-.5-1v-2a10 10 0 0 0-7.2 0v2c0 .4-.2.8-.5 1l-2.2 1.6c-.5.4-1.2.3-1.6-.1l-1.6-1.6a1.3 1.3 0 0 1 0-1.8Z"/></svg><span>Leave</span></button>
+          </div>
+        </header>
+
+        <div class="wake-panel hidden" id="wake-panel">
+          <div class="wake-card off" id="wake-card">
+            <div class="portrait"><div class="ring"></div><div class="orb lino" id="wake-orb"></div></div>
+            <span class="state"><i></i><span id="wake-state">Offline</span></span>
+            <h3 id="wake-title">Lino is asleep</h3>
+            <p id="wake-text">Lino runs on his own GPU, which sleeps when nobody is talking to him. Waking him up takes a moment.</p>
+            <button class="call" id="wake-btn"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7Z"/></svg><span id="wake-btn-t">Ping Lino to wake up</span></button>
+            <div class="wake-steps hidden" id="wake-steps"><span id="ws-1">Starting GPU</span><span id="ws-2">Loading model</span><span id="ws-3">Warming up</span></div>
+            <div class="wake-time hidden" id="wake-time"><div class="wt-bar"><i id="wt-fill"></i></div><div class="wt-row"><span id="wt-elapsed">0:00</span><span id="wt-eta">usually about 3:40</span></div></div>
+          </div>
+        </div>
+        <div class="feed" id="feed"><div class="thread" id="thread"></div><div class="thread hidden" id="thread-lino"></div><div class="thread hidden" id="thread-guido"></div></div>
+
+        <aside class="kg-panel" id="kg-panel" aria-label="Knowledge graph traversal">
+          <header class="kg-head"><div><b>Knowledge graph</b><span id="kg-status">Ask a question to start the traversal</span></div>
+            <div class="kg-legend"><span class="lg c">Concept</span><span class="lg r">Recommendation</span><span class="lg g">Guideline</span></div></header>
+          <div class="kg-canvas" id="kg-canvas"></div>
+          <div class="kg-empty" id="kg-empty"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="8" r="2.5"/><circle cx="10" cy="18" r="2.5"/><path d="M8.3 7 15.6 7.7M7 8.3l2.2 7.3M16.6 10.1 11.8 16"/></svg><p>Guido walks TIB's guideline knowledge graph live: concepts, their relations and the recommendations behind each answer.</p></div>
+          <div class="kg-tip hidden" id="kg-tip"></div>
+        </aside>
+        <div class="composer" id="composer">
+          <div class="suggests hidden" id="suggests"></div>
+          <div class="box">
+            <span class="att hidden" id="att"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9.5 5 2.5-5 2.5Z"/></svg>Storyboard prompt<button id="att-x" aria-label="Remove storyboard prompt"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></span>
+            <input id="msg" placeholder="Ask Luna about heart guidelines…" autocomplete="off" aria-label="Message Luna">
+            <button class="clear-btn" id="clear-chat" aria-label="Clear chat" title="Clear chat"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg></button>
+            <button class="send" id="send" aria-label="Send"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+          </div>
+          <div class="status" id="status" role="status"></div>
+        </div>
+      </section>
+
+      <section class="vids hidden" id="view-settings" aria-labelledby="settings-title">
+        <header class="lib-head"><div><h2 id="settings-title">Settings</h2><p class="lib-sub">Resources behind TIB Chat.</p></div></header>
+        <div class="lib-body"><div class="set-grid">
+          <article class="set-card">
+            <div class="gauge" id="gauge" style="--pct:0"><svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="52"/><circle class="val" cx="60" cy="60" r="52"/></svg>
+              <div class="gauge-n"><b id="credit-pct">–</b><span>remaining</span></div></div>
+            <div><span class="set-kicker">Modal GPU credits</span><h3>This month's credits for Lino</h3>
+              <p id="credit-note">Loading…</p></div>
+          </article>
+          <article class="set-card">
+            <div class="orb lino set-orb"><span class="presence off" id="set-lino-dot"></span></div>
+            <div><span class="set-kicker">Lino &amp; Guido runtime</span><h3 id="set-lino-state">Asleep</h3>
+              <p id="set-lino-note">NVIDIA L4 GPU on Modal. Sleeps when unused and wakes on request.</p>
+              <button class="gpu-off hidden" id="gpu-off"><svg viewBox="0 0 24 24"><path d="M12 3v9M6.3 6.3a8 8 0 1 0 11.4 0"/></svg><span>Shut down GPU</span></button></div>
+          </article>
+          <article class="set-card">
+            <div class="gauge" id="tv-gauge" style="--pct:0"><svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="52"/><circle class="val" cx="60" cy="60" r="52"/></svg>
+              <div class="gauge-n"><b id="tv-min">–</b><span>min left</span></div></div>
+            <div><span class="set-kicker">Tavus video calls</span><h3>Remaining video call time</h3>
+              <p id="tv-note">Loading…</p></div>
+          </article>
+        </div></div>
+      </section>
+
+      <section class="srch hidden" id="view-search" aria-labelledby="search-title">
+        <header class="srch-head">
+          <h2 id="search-title">Search</h2>
+          <label class="srch-box"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="srch-q" type="search" placeholder="Search agents, conversations, guidelines, the knowledge graph and videos" aria-label="Search everything" autocomplete="off"><kbd>Ctrl K</kbd></label>
+          <div class="srch-try" id="srch-try"></div>
+        </header>
+        <div class="srch-body"><div class="srch-res" id="srch-res"></div></div>
+      </section>
+      <section class="vids hidden" id="view-videos" aria-labelledby="videos-title">
+        <header class="lib-head"><div><h2 id="videos-title">Videos</h2><p class="lib-sub">Patient education videos on heart failure medicines, generated in Mahsa's NeSyCoT pipeline.</p></div></header>
+        <div class="lib-body"><div class="vid-grid" id="vid-grid"></div></div>
+      </section>
+
+      <section class="library hidden" id="view-sources" aria-labelledby="sources-title">
+        <header class="lib-head">
+          <h2 id="sources-title">Sources</h2>
+          <div class="lib-tools"><div class="facts"><div><b id="kb-docs">–</b><span>documents</span></div><div><b id="kb-pages">–</b><span>pages</span></div></div><label class="lib-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="lib-q" type="search" placeholder="Filter by title, author or year" aria-label="Filter documents"></label></div>
+        </header>
+        <div class="lib-body"><div class="lib-grid" id="sources"></div></div>
+      </section>
+    </main>
+  </div>
+</div>
+
+
+<div class="player hidden" id="player" role="dialog" aria-modal="true" aria-labelledby="player-title">
+  <video id="player-video" controls playsinline preload="metadata"></video>
+  <div class="bar"><div class="t"><small id="player-tag"></small><h3 id="player-title"></h3><p id="player-desc"></p></div>
+    <button class="x" id="player-close" aria-label="Close video"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+</div>
+
+<aside class="fs-hint hidden" id="fs-hint" role="note">
+  <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+  <div><b>Best in full screen</b><span>For the best demo experience</span></div>
+  <button class="fs-go" id="fs-go">Full screen</button>
+  <button class="fs-x" id="fs-x" aria-label="Dismiss"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+</aside>
+
+<div class="picker hidden" id="picker" role="dialog" aria-modal="true" aria-labelledby="picker-title">
+  <div class="picker-card">
+    <header><div><h3 id="picker-title">New chat</h3><p>Choose who you want to talk to.</p></div>
+      <button class="icon-btn" id="picker-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></header>
+    <div class="picker-list" id="picker-list"></div>
+  </div>
+</div>
+
+<div class="srcx hidden" id="srcx" role="dialog" aria-modal="true" aria-labelledby="srcx-title">
+  <div class="srcx-card">
+    <header class="srcx-head">
+      <span class="n" id="srcx-n">1</span>
+      <div class="meta"><b id="srcx-title"></b><small id="srcx-sub"></small></div>
+      <button class="icon-btn" id="srcx-prev" aria-label="Previous source"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button class="icon-btn" id="srcx-next" aria-label="Next source"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
+      <button class="icon-btn" id="srcx-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </header>
+    <div class="srcx-body">
+      <div class="srcx-page" id="srcx-page"></div>
+      <aside class="srcx-quote"><h4>Passage used by Luna</h4><p id="srcx-quote"></p></aside>
+    </div>
+  </div>
+</div>
+
+<section class="callx closed hidden" id="callx" aria-label="Video call with Luna">
+  <video class="remote" id="remote" autoplay playsinline></video>
+  <audio id="remote-audio" autoplay></audio>
+  <div class="cx-wait fade hidden" id="cx-wait"><div><div class="orb" id="cx-wait-orb"></div><span id="cx-wait-text">Connecting to Luna…</span></div></div>
+
+  <div class="prejoin fade" id="prejoin">
+    <div class="pj-cam">
+      <video id="preview" autoplay playsinline muted></video>
+      <div class="off hidden" id="preview-off">Camera is off</div>
+      <div class="toggles">
+        <button class="round" id="pj-mic" aria-pressed="false" title="Microphone"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+        <button class="round" id="pj-cam" aria-pressed="false" title="Camera"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M16 10.5 22 7v10l-6-3.5"/></svg></button>
+      </div>
+    </div>
+    <div class="pj-side">
+      <h2>Ready to join?</h2>
+      <p>Check your camera and microphone. Luna joins as soon as you enter.</p>
+      <label for="sel-cam">Camera</label><select id="sel-cam"></select>
+      <label for="sel-mic">Microphone</label><select id="sel-mic"></select>
+      <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+      <label for="sel-spk">Speaker</label><select id="sel-spk"></select>
+      <div class="pj-actions"><button class="ghost" id="pj-cancel">Cancel</button><button class="call" id="pj-join"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M17 10.2 22 7v10l-5-3.2Z"/></svg>Join call</button></div>
+      <div class="pj-err" id="pj-err" role="alert"></div>
+    </div>
+  </div>
+
+
+  <section class="share" id="share" aria-label="Guido's shared screen">
+    <div class="share-bar"><img src="/static/img/logo-tib.png" alt=""><b>Evidence Desk</b><span>File</span><span>View</span><span>Window</span>
+      <span class="share-live"><i></i>Guido is sharing his screen</span><span class="share-clock" id="share-clock"></span></div>
+    <div class="desk-area" id="desk-area"></div>
+    <div class="share-dir" id="share-dir"><span class="cf">clef-flash</span><span id="share-dir-t">director ready</span></div>
+  </section>
+  <aside class="cx-stage" id="cx-stage" aria-label="Live evidence">
+    <header class="stage-head"><span class="stage-dot" id="stage-dot"></span><div><b id="stage-title">Live board</b><small id="stage-sub"></small></div>
+      <button class="cx-ibtn" id="stage-close" aria-label="Hide live board"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></header>
+    <div class="stage-cards" id="stage-cards"></div>
+  </aside>
+  <div class="pip fade hidden" id="pip"><video id="local" autoplay playsinline muted></video><div class="off hidden" id="local-off">Camera off</div><span class="lab">You</span>
+    <svg class="mic hidden" id="pip-muted" viewBox="0 0 24 24"><path d="M3 3l18 18M9 9v2a3 3 0 0 0 5 2.2M15 9.3V6a3 3 0 0 0-5.7-1.3M5 11a7 7 0 0 0 11.6 5.3M19 11a7 7 0 0 1-.7 3M12 18v3"/></svg></div>
+
+  <nav class="dock fade hidden" id="dock" aria-label="Call controls">
+    <button id="d-mic" aria-pressed="false"><span class="ico"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><span class="lbl">Mute</span></button>
+    <button id="d-cam" aria-pressed="false"><span class="ico"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3"/><path d="M16 10.5 22 7v10l-6-3.5"/></svg></span><span class="lbl">Stop Video</span></button>
+    <button id="d-chat" aria-pressed="false"><span class="ico"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg></span><span class="lbl">Chat</span></button>
+    <span class="sep"></span>
+    <button class="end" id="d-end"><span class="ico"><svg viewBox="0 0 24 24"><path d="M2.5 14.8c5.2-5 13.8-5 19 0 .5.5.5 1.3 0 1.8l-1.6 1.6c-.4.4-1.1.5-1.6.1l-2.2-1.6a1.3 1.3 0 0 1-.5-1v-2a10 10 0 0 0-7.2 0v2c0 .4-.2.8-.5 1l-2.2 1.6c-.5.4-1.2.3-1.6-.1l-1.6-1.6a1.3 1.3 0 0 1 0-1.8Z"/></svg></span><span class="lbl">End</span></button>
+  </nav>
+
+  <aside class="cx-chat" id="cx-chat" aria-label="Chat"><header>Chat with Luna<button class="icon-btn" id="cx-chat-close" aria-label="Close chat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></header><div class="slot" id="cx-slot"></div></aside>
+</section>
+
+<script type="importmap">
+{"imports": {
+  "react": "https://esm.sh/react@19.2.3",
+  "react-dom/client": "https://esm.sh/react-dom@19.2.3/client?deps=react@19.2.3",
+  "zod": "https://esm.sh/zod@4.3.6",
+  "@json-render/core": "https://esm.sh/@json-render/core@0.21.0?deps=zod@4.3.6",
+  "@json-render/react": "https://esm.sh/@json-render/react@0.21.0?deps=react@19.2.3,zod@4.3.6",
+  "@json-render/react/schema": "https://esm.sh/@json-render/react@0.21.0/schema?deps=react@19.2.3,zod@4.3.6"
+}}
+</script>
+<script type="module" src="/static/js/jsonrender.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@18.1.0/lib/marked.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/force-graph@1.52.0/dist/force-graph.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.16/dist/purify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@daily-co/daily-js@0.93.0/dist/daily.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "ask_lino",
+  "description": "Ask Lino's own fine-tuned model (Llama 3.2 1B, fine-tuned at TIB with NeSyCoT on the clinical-guideline knowledge graph). Call it for EVERY user message, passing the user's exact words. The model's answer is spoken to the user automatically.",
+  "parameters": {
+    "type": "object",
+    "required": [
+      "question"
+    ],
+    "properties": {
+      "question": {
+        "type": "string",
+        "description": "The user's question in plain English"
+      }
+    }
+  },
+  "delivery": {
+    "app_message": true
+  },
+  "on_call": "silent",
+  "on_resolve": "add_to_context"
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>TIB Chat · Usage dashboard</title>
+<link rel="stylesheet" href="/static/css/dashboard.css">
+
+</head>
+<body>
+<section class="login" id="login">
+  <form class="card" id="login-form">
+    <h1>Usage dashboard</h1>
+    <p>TIB Chat · admin access</p>
+    <input type="password" id="pw" placeholder="Admin password" autocomplete="current-password" autofocus>
+    <button class="btn" type="submit">Open dashboard</button>
+    <div class="err" id="err"></div>
+  </form>
+</section>
+
+<main class="app hidden" id="app">
+  <div class="card">
+    <div class="top">
+      <div><h1>Usage dashboard</h1><p id="range">–</p></div>
+      <button class="ghost" id="logout">Sign out</button>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="tools">
+      <input id="q" placeholder="Filter by IP, device, agent, text…">
+      <span id="chips"></span>
+      <span class="live"><i></i>updates every 15 s</span>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>Time</th><th>Event</th><th>Agent</th><th>Details</th><th>IP</th><th>Device</th><th>Browser</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <p class="note">Device = anonymous random id stored in the visitor's browser. IP from the Cloud Run load balancer (X-Forwarded-For). Last 5,000 events, stored in the project's private bucket.</p>
+  </div>
+</main>
+
+<script src="/static/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+# the server itself is stdlib only. modal is for the gpu shutdown button and the credit gauge
+modal==1.6.1

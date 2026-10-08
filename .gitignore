@@ -1,0 +1,10 @@
+# secrets
+.env
+# large files, kept in the bucket (python deploy/deploy.py assets pull)
+app/static/videos/*.mp4
+app/static/videos/*.jpg
+gpu/adapter/
+page_images/
+# python
+__pycache__/
+*.pyc
